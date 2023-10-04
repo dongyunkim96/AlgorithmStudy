@@ -1,0 +1,19 @@
+const fs = require('fs');
+let input = fs.readFileSync('/dev/stdin').toString().split('\n');
+
+input = input[0].split(' ');
+const first = +input[0];
+const second = +input[1];
+
+let arr = [];
+for (i = 0; i < 100; i++) {
+  for (j = 1; j <= i; j++) {
+    arr.push(i);
+  }
+}
+
+let answer = 0;
+for (i = first - 1; i < second; i++) {
+  answer += arr[i];
+}
+console.log(answer);

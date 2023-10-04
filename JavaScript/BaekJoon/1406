@@ -1,0 +1,31 @@
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().split('\n');
+
+let letter = input[0].split(''); //처음 문자열 
+let add = []; //여기는 무조건 한글자
+const m = Number(input[1]);
+
+for(let i = 2; i <= m + 1; i++) {
+    if(input[i] === 'L') {
+        if(letter.length) {
+          add.push(letter.pop()); //왼쪽커서로 한칸옮김 마지막글자는 letter로푸쉬
+        }
+    }
+    else if(input[i] === 'D') {
+        if(add.length) {
+          letter.push(add.pop()); // 오른쪽커서로 한칸옮김 맨앞글자는 n으로 푸쉬
+        }
+    }
+    else if(input[i] === 'B') {
+        if(letter.length) {
+          letter.pop(); //커서왼쪽에 문자하나 삭제
+        }
+    }
+    else {
+        letter.push(input[i].split(' ')[1]); //나머지 (P)일 경우 n에 추가
+    }
+}
+while(add.length) {
+    letter.push(add.pop());
+}
+console.log(letter.join(''));

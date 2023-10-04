@@ -1,0 +1,14 @@
+let input = require('fs').readFileSync('/dev/stdin').toString().trim().split('\n').map(Number)
+input.shift();
+input.sort((a,b) => b-a) // 큰숫자가 앞에오게 sort
+
+let result = 0;
+while(input.length > 2){ // 최소 3개이상
+  if(input[0] >= input[1]+input[2]){ // 삼각형의 가장 긴변은 나머지 두변의 길이의 합보다 작다.
+    input.shift();
+  } else {
+    result += input[0]+input[1]+input[2]
+    break;
+  }
+}
+result === 0 ? console.log(-1) : console.log(result) // result 가 0이면 -1 아니면 result 출력

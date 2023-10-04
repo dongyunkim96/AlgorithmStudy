@@ -1,0 +1,39 @@
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+
+let letter = input[0];
+let stack = [];
+let result = ''; //괄호와 연산자의 우선순위
+
+for (let i = 0; i < letter.length; i++) {
+    if (letter[i] >= 'A' && letter[i] <= 'Z') { //알파벳일때는 결과에 추가
+        result += letter[i];
+    }
+    else if (letter[i] === '(') { //앞괄호일때는 스택에 추가
+        stack.push(letter[i]);
+    }
+    else if (letter[i] === ')') { // 뒷괄호일때, 앞괄호가 나올때까지 스택에있는걸 결과로 pop.
+        while (stack.length && stack[stack.length - 1] !== '(') {
+            result += stack.pop();
+        }
+        stack.pop();
+    }
+    else if (letter[i] === '+' || letter[i] === '-') { 
+        while (stack.length && stack[stack.length - 1] !== '(') {
+            result += stack.pop();
+        }
+        stack.push(letter[i]);
+    }
+    else if (letter[i] === '*' || letter[i] === '/') { 
+        while ((stack.length && stack[stack.length - 1] === '*') || 
+               stack[stack.length - 1] === '/') {
+            result += stack.pop();            
+        }
+        stack.push(letter[i]);
+    }
+    // *,/ 가 +,- 보다 우선순위가 높기 때문에 +,- 는 그냥 push 해주고 *,/ 는 pop해서 push 해주기
+}
+while (stack.length) {
+    result += stack.pop();
+}
+console.log(result);

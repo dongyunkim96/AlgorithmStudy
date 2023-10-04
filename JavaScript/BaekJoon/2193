@@ -1,0 +1,8 @@
+const fs = require('fs');
+let inputs = fs.readFileSync('/dev/stdin').toString();
+inputs = Number(inputs);
+let arr = [0, 1, 1];
+for(let i=3; i<=inputs; i++){
+    arr[i] = BigInt(arr[i-1]) + BigInt(arr[i-2]);
+}
+console.log((BigInt(arr[inputs])).toString());

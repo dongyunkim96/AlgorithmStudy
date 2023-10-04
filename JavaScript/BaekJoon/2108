@@ -1,0 +1,52 @@
+const input = require('fs').readFileSync(0).toString().split('\n').map(Number);
+
+const N = input[0];
+let numbers = [];
+
+for (let i = 1; i <= N; i++) {
+    numbers.push(input[i]); // [1, 3, 8, -2, 2]
+}
+
+// 중앙값
+numbers.sort((a, b) => a - b); // 오름차순 정렬 [-2, 1, 2, 3, 8]
+const median = numbers[Math.floor(N / 2)]; // 중앙값 (Math.floor() 함수는 소수점 첫째 자리에서 무조건 내림
+
+// 평균
+let sum = 0;
+for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+}
+
+const average = Math.round(sum / N);
+
+// 최빈값
+let map = {}; // 객체
+let modeArr = []; // 최빈값 담을 배열
+let mode = 0; // 최종 최빈값
+
+// console.log(map[number]) 출력 결과 => 1\n1\n1\n1\n1
+for (let number of numbers) {
+    if (map[number]) map[number] += 1;
+    else map[number] = 1;
+}
+
+// console.log(map) 출력 결과 => { '1': 1, '2': 1, '3': 1, '8': 1, '-2': 1 }
+
+// key 값이 아닌 map의 value 값을 뽑음 (제일 자주 나타나는 수를 알아야 하니까
+let max = Math.max(...Object.values(map));
+
+// max랑 map의 key값이 같으면 최빈값 담는 배열에 push
+for (let key in map) {
+    if (max === map[key]) modeArr.push(key);
+}
+
+// 만약 최빈값이 1개가 아니라면 
+if (modeArr.length > 1) {
+    modeArr = modeArr.sort((a, b) => a - b); // 오름차순 정렬
+    mode = modeArr[1]; // 두 번째로 작은 값을 최종 최빈값 변수에 저장
+} else mode = modeArr[0]; // 최빈값이 1개라면 배열의 첫 번째를 담아 주면 됨
+
+// 범위
+const range = numbers[N - 1] - numbers[0];
+
+console.log(`${average}\n${median}\n${mode}\n${range}`);

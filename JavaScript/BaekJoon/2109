@@ -1,0 +1,13 @@
+let fs = require('fs');
+let input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+
+let cases = input.slice(1).map(v=>v.split(' ').map(v=>+v)).sort((a,b)=>a[0]===b[0]?a[1]-b[1]:b[0]-a[0]);
+
+let arr = Array(+input[0]).fill(0);
+
+for (let c of cases) {
+    let ind = arr.lastIndexOf(0, c[1]-1);    
+    if (ind > -1 && c[0] !== 0) arr[ind] = c[0];
+}
+let sum = arr.reduce((a,v)=>a+v, 0);
+console.log(sum);
