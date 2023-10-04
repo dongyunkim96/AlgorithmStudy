@@ -1,0 +1,24 @@
+const fs = require('fs');
+const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const [n, k] = input[0].split(' '); // 인풋을 n과 k로 정리해주기
+
+function solution(n, k) {
+  const result = [];
+  const arr = [];
+  for (let i = 0; i < n; i++) {
+      arr.push(i+1); // 빈 arr에 숫자를 순서대로 넣어주기
+  }
+  let count = 1;
+  while (arr.length) {
+     const firstNum = arr.shift();
+    if (count % k === 0) {
+        result.push(firstNum); // k 번째 숫자가 맞으면 result 에 푸쉬해주기
+    }
+    else {
+        arr.push(firstNum); // k 번째가 아니면 arr에 다시 푸쉬해주기.
+    }
+    count += 1;
+  } 
+    console.log(`<${result.join(', ')}>`);
+}
+  solution(n, k);
